@@ -1,0 +1,42 @@
+<%- include('../cabecalho.ejs')%>
+ <main class="container">
+        <div class="page-header">
+            <h2>Lista de Jogadores</h2>
+            <a href="/jogador/add" class="btn btn-success">+ Novo Jogador</a>
+            <form method="post"> </br>
+                <div class="form-group">
+                <input type="text" name="pesquisar" placeholder="Nome do Jogador">
+                <input class="btn btn-success" type="submit" value="Buscar">
+              </div>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Número</th>
+                        <th>Seleção</th>
+                        <th>Participação em gols</th>
+                        <th>Excluir</th>
+                        <th>Editar</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <% jogadores.forEach(jogador => { %>
+                        <tr>
+                            <td><%= jogador.nome %></td>
+                            <td><%= jogador.numero %></td>
+                            <td><%= jogador.selecao %></td>
+                            <td><%= jogador.gols + jogador.assistencias %></td>
+                            <td><a href="/jogador/del/<%= jogador.id %>" class="link">EXCLUIR</a></td>
+                            <td><a href="/jogador/edt/<%= jogador.id %>" class="link">EDITAR</a></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+<%- include('../rodape.ejs')%>
