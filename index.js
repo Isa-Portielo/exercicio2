@@ -33,12 +33,18 @@ app.post('/selecao/add', async (req, res) => {
 });
 app.post('/selecao/lst', async (req, res) => {
   const { pesquisar } = req.body;
-  const selecoes = await Selecao.find({
-    nome: new RegExp(pesquisar, 'i')
-    
-  });
-  res.render("selecao/lst", { selecoes });
-})
+  const numero = parseInt(pesquisar);
+  
+  if (!isNaN(numero)) {
+    const selecoes = await Selecao.find({
+      titulosMundiais: numero
+    });
+
+    res.render("selecao/lst", { selecoes });
+    return;
+  }
+});
+
 
 app.get('/selecao/del/:id', async (req, res) => {
 const selecao = await Selecao.findByIdAndDelete(req.params.id)
@@ -69,10 +75,10 @@ app.post('/jogador/add', async (req, res) => {
 app.post('/jogador/lst', async (req, res) => {
   const { pesquisar } = req.body;
   const jogadores = await Jogador.find({
-    nome: new RegExp(pesquisar, 'i')
+    nome: new RegExp(`^${pesquisar}`, 'i')
   });
   res.render("jogador/lst", { jogadores });
-})
+});
 app.get('/jogador/del/:id', async (req, res) => {
 const jogador = await Jogador.findByIdAndDelete(req.params.id)
 res.redirect("/jogador/lst")
